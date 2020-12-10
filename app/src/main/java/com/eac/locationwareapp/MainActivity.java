@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     private FusedLocationProviderClient fusedLocationClient;
     TextView txtLocation,txtAddress;
+    private String latitude ,longitude ,address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkLocationPermission();
+            }
+        });
+
+        Button btnShowMap = findViewById(R.id.btnShowMap);
+        btnShowMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open maps activity
+                //intent
+                //pass the following - lat longitude
+                Intent intent = new Intent(context,MapsActivity.class);
+                intent.putExtra("lat",latitude);
+                intent.putExtra("longt",longitude);
+                intent.putExtra("address",address);
+                startActivity(intent);
             }
         });
     }
@@ -128,7 +145,9 @@ public class MainActivity extends AppCompatActivity {
                 String admin = addressList.get(0).getAdminArea();
                 String landmark = addressList.get(0).getFeatureName();
                 txtAddress.setText("CountryName: "+countryName+"\nCity "+admin+"\nFeatureName "+landmark);
-
+                address = admin+""+landmark;
+                latitude = ""+lat;
+                longitude = ""+longt;
             }
         } catch (IOException e) {
             e.printStackTrace();

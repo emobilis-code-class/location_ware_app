@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LocationWareApp</string>
+
+    <string name="google_map_api_key">AIzaSyDyhZIOzN73ecEnsr0WEtfg7YJAxkltUNM</string>
 </resources>
